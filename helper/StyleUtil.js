@@ -13,6 +13,18 @@ export const Wrapper = styled.div`
     align-items: center;
 `;
 
+export const HomeWrapper = styled.div`
+    border: 20px solid lavenderblush;
+    padding: 40px 50px;
+    width: 1000px;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+`;
+
 export const Form = styled.form`
     
 `;
@@ -40,5 +52,19 @@ export const Button = styled.button`
     display: flex;
     flex-direction: row;
     margin: auto;
+`;
+
+export const Ul = styled.ul`
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+`;
+
+export const Li = styled.li`
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    margin-bottom: 5px;
+    color: Indigo;
 `;
 

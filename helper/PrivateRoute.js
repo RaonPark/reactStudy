@@ -1,21 +1,22 @@
 import React, {useState} from 'react';
-import {Redirect, Route} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import LoginService from "./LoginService";
+import Login from "../container/Login";
 
-const PrivateRoute = ({component: Component, ...rest}) => {
+const PrivateRoute = ({Component, ...rest}) => {
     const [loggedIn, setLoggedIn] = useState(false);
 
     LoginService.isLoggedIn().then(result => {
         setLoggedIn(result);
+        console.log(result);
+        console.log(Component);
+        console.log(...rest);
     }).catch(err => {
        console.log(err);
     });
 
     return (
-        <Route {...rest} render={props => loggedIn ? (
-            <Component {...props} /> ) : (
-                <Redirect to={{pathname: '/ssuzalal/login', state: {from: props.location}}}/> )
-        } />
+        <Route exact path="/" component={loggedIn ? Component : Login} />
     )
 }
 

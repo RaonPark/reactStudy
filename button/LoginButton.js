@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {useHistory, withRouter} from 'react-router-dom';
 import {Button} from "../helper/StyleUtil";
 import axios from "axios";
+import throttle from 'lodash.throttle';
 
 const LOGIN_URL = "/ssuzalal/login.do";
 
@@ -29,6 +30,8 @@ const LoginButton = ({history, id, password}) => {
         });
     }
 
+    const delayedOnClick = throttle(handleClick, 1000);
+
     const handleKeyPress = e => {
         if(e.key === "Enter") {
             this.handleClick(e);
@@ -36,7 +39,7 @@ const LoginButton = ({history, id, password}) => {
     }
 
     return (
-        <Button onClick={handleClick} onKeyPress={handleKeyPress}>로그인하기</Button>
+        <Button onClick={delayedOnClick} onKeyPress={handleKeyPress}>로그인하기</Button>
     );
 }
 

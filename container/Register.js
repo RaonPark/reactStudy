@@ -3,8 +3,10 @@ import {Wrapper, Input, Button, Form, ButtonWrapper} from "../helper/StyleUtil";
 import Select from "react-select";
 import {Link} from "react-router-dom";
 import axios from 'axios';
+import styled from "styled-components";
 
 const REGISTER_PAGE = "/ssuzalal/register.do";
+const passwordRegEx = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$";
 
 const InputWithLabel = ({label, ...inputInfo}) => (
     <div>
@@ -16,6 +18,11 @@ const InputWithLabel = ({label, ...inputInfo}) => (
 const RegisterButton = ({onClick}) => (
     <Button onClick={onClick}>회원가입</Button>
 );
+
+const PwConfirmPTag = styled.p`
+    font-size: 10px;
+    color: red;
+`
 
 class Register extends React.Component {
     constructor(props) {
@@ -31,6 +38,7 @@ class Register extends React.Component {
             minor: '',
             grade: '',
             memberType: '',
+            confirmMsg: ''
         };
     }
 
@@ -41,8 +49,17 @@ class Register extends React.Component {
         e.preventDefault();
     }
 
-    handleClick = e => {
+    handleRegisterClick = e => {
+        e.preventDefault();
+
         const {id, password, passwordConfirm, email, username, major, doubleMajor, minor, grade, memberType} = this.state;
+        if(!passwordRegEx.test(passwordConfirm)) {
+            alert("비밀번호는 문자, 숫자, 특수문자를 각각 적어도 하나 포함해야합니다.");
+            return ;
+        }
+
+        let memberTypeInt = memberType === '학생' ? 2 : 3;
+
         axios(
             {
                 url: REGISTER_PAGE,
@@ -60,6 +77,28 @@ class Register extends React.Component {
                 baseURL: 'http://localhost:8080'
             }
         );
+    }
+
+    handleLoginClick = e => {
+        e.preventDefault();
+
+        this.props.history.push("/ssuzalal/login");
+    }
+
+    handleConfirmChange = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+
+        if(this.state.password !== e.target.value) {
+            this.setState({
+                confirmMsg: "비밀번호가 일치하지 않습니다."
+            });
+        } else {
+            this.setState({
+                confirmMsg: "비밀번호가 일치합니다."
+            });
+        }
         e.preventDefault();
     }
 
@@ -82,8 +121,8 @@ class Register extends React.Component {
         ];
 
         const memberTypeOptions = [
-            {value: "2", label: "학생"},
-            {value: "3", label: "교직원"}
+            {value: "학생", label: "학생"},
+            {value: "교직원", label: "교직원"}
         ];
 
         return (
@@ -92,7 +131,8 @@ class Register extends React.Component {
                     <h1>로그인 화면</h1>
                     <InputWithLabel label='아이디' type='text' name='id' value={this.state.id} onChange={this.handleChange} placeholder='아이디 입력'/>
                     <InputWithLabel label='비밀번호' type='password' name='password' value={this.state.password} onChange={this.handleChange} placeholder='비밀번호 입력' />
-                    <InputWithLabel label='비밀번호 확인' type='password' name='passwordConfirm' value={this.state.passwordConfirm} onChange={this.handleChange} placeholder='비밀번호 재입력' />
+                    <InputWithLabel label='비밀번호 확인' type='password' name='passwordConfirm' value={this.state.passwordConfirm} onChange={this.handleConfirmChange} tabIndex="0" placeholder='비밀번호 재입력' />
+                    <PwConfirmPTag>{this.state.confirmMsg}</PwConfirmPTag>
                     <InputWithLabel label='이메일' type='email' name='email' value={this.state.email} onChange={this.handleChange} placeholder='이메일 입력' />
                     <InputWithLabel label='이름' type='text' name='username' value={this.state.username} onChange={this.handleChange} placeholder='이름 입력' />
                     <div>학과 선택</div>
@@ -104,10 +144,8 @@ class Register extends React.Component {
                     <InputWithLabel label='학년' type='text' name='grade' value={this.state.grade} onChange={this.handleChange} placeholder='학년 입력'/>
                     <Select options={memberTypeOptions} name='memberType' value={this.state.memberType} onChange={this.handleOptionChange} placeholder="학생/교직원 선택"/>
                     <ButtonWrapper>
-                        <Link to="/">
-                            <Button>로그인하기</Button>
-                        </Link>
-                        <RegisterButton onClick={this.handleClick} />
+                        <Button onClick={this.handleLoginClick}>로그인하기</Button>
+                        <RegisterButton onClick={this.handleRegisterClick} />
                     </ButtonWrapper>
                 </Form>
             </Wrapper>
