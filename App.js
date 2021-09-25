@@ -8,6 +8,8 @@ import Home from "./container/Home";
 import React, {useEffect, useState} from "react";
 import PrivateRoute from "./helper/PrivateRoute";
 import LoginService from "./helper/LoginService";
+import Board from './container/Board';
+import Article from "./container/Article";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -30,6 +32,8 @@ function App() {
                         <Route path="/ssuzalal/register" component={Register}/>
                         <Route exact path="/ssuzalal/home" component={Home}/>
                         <Route path="/ssuzalal/emailAuth" component={EmailAuth}/>
+                        <Route path="/ssuzalal/board" component={Board}/>
+                        <Route path="/ssuzalal/article" component={Article}/>
                         <Route component={Login}/>
                     </Switch>
                 </div>

@@ -2,6 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {HomeWrapper} from "../helper/StyleUtil";
 import LoginService from "../helper/LoginService";
 import AnnouncementList from "../helper/AnnouncementList";
+import Button from '@mui/material/Button';
+import Board from "./Board";
+import {Link} from "react-router-dom";
 
 const BACHELOR = "/ssuzalal/bachelor.do";
 const SCHOLARSHIP = "/ssuzalal/scholarship.do";
@@ -39,6 +42,7 @@ const Home = () => {
             <h1>환영합니다. {id}</h1>
             <h4>시간 : {time}</h4>
             <h5>이름 : {username} 학부 : {major}</h5>
+            <Button component={Link} to="/ssuzalal/board">게시판으로</Button>
             <AnnouncementList url={BACHELOR}/>
             <AnnouncementList url={SCHOLARSHIP}/>
             <AnnouncementList url={EXCHANGE}/>
