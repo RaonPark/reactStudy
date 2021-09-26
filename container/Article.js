@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Table, TableCell, TableRow, TableBody, TextField, Button} from "@mui/material";
 import BoardService from "../helper/BoardService";
 
-const Article = () => {
+const Article = (props) => {
     const handleTitleChange = e => {
         e.preventDefault();
         setTitle(e.target.value);
@@ -18,6 +18,7 @@ const Article = () => {
         BoardService.postArticle(title, content).then(value => {
             if(value) {
                 alert("게시글 작성이 완료되었습니다.");
+                props.history.push("/ssuzalal/board");
             } else {
                 alert("게시글 작성에 실패했습니다. 이 문제가 계속될 경우 관리자에게 문의해주세요.");
             }

@@ -25,7 +25,14 @@ class BoardService {
             {
                 url: '/ssuzalal/postArticle.do',
                 method: 'post',
-                baseURL: 'http://localhost:8080'
+                baseURL: 'http://localhost:8080',
+                data: {
+                    id: '',
+                    password: '',
+                    boardId: '',
+                    title: title,
+                    content: content
+                }
             }
         ).then(response => {
             retVal = response.data;

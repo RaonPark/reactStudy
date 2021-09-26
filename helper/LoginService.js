@@ -34,7 +34,7 @@ class LoginService {
                 id: response.data.id,
                 username: response.data.username,
                 major: response.data.major,
-                time: new Date().toString()
+                time: new Date().toLocaleTimeString('ko-kr')
             }
         }).catch(err => {
             console.log(err);

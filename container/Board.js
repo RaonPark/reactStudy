@@ -14,17 +14,23 @@ import {Link} from 'react-router-dom';
 import BoardService from "../helper/BoardService";
 
 const Board = () => {
-    function handleWriteClick(e) {
-        e.preventDefault();
-
-        props.history.push("/ssuzalal/article");
-    }
 
     const [articles, setArticles] = useState(new Map());
 
     useEffect(() => {
+        const now = new Date().toLocaleDateString();
         BoardService.getArticles().then(value => {
-            setArticles(value);
+            setArticles(value.map(item => <TableRow>
+                <TableCell>
+                    {new Date(item.postedTime).toLocaleDateString('ko-kr', { timeZone: 'UTC' }) === now
+                        ? new Date(item.postedTime).toLocaleTimeString('ko-kr', {timeZone: 'UTC'})
+                        : new Date(item.postedTime).toLocaleDateString('ko-kr', {timeZone: 'UTC'})}
+                </TableCell>
+                <TableCell>{item.title}</TableCell>
+                <TableCell>{item.id}</TableCell>
+                <TableCell>{item.content}</TableCell>
+            </TableRow>));
+            console.log(value);
         }).catch(err => {
             console.log(err);
         });
@@ -48,7 +54,7 @@ const Board = () => {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             게시판
                         </Typography>
-                        <Button color="inherit" onClick={handleWriteClick}>게시글 쓰기</Button>
+                        <Button color="inherit" component={Link} to="/ssuzalal/article">게시글 쓰기</Button>
                         <Button color="inherit" component={Link} to="/ssuzalal/login">Login</Button>
                     </Toolbar>
                 </AppBar>
@@ -56,19 +62,14 @@ const Board = () => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>순번</TableCell>
+                        <TableCell>시간</TableCell>
                         <TableCell>제목</TableCell>
                         <TableCell>글쓴이</TableCell>
-                        <TableCell>학부</TableCell>
+                        <TableCell>내용</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {articles.size > 0 && articles.map((item) => <TableRow>
-                        <TableCell>{item.boardId}</TableCell>
-                        <TableCell>{item.title}</TableCell>
-                        <TableCell>{item.id}</TableCell>
-                        <TableCell>{item.id}</TableCell>
-                    </TableRow>)}
+                    {articles}
                 </TableBody>
             </Table>
             <Pagination count={articles.size === 0 ? 1 : articles.size} variant="outlined" color="secondary"/>
