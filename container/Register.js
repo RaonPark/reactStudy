@@ -1,7 +1,6 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {Wrapper, Input, Button, Form, ButtonWrapper} from "../helper/StyleUtil";
 import Select from "react-select";
-import {Link} from "react-router-dom";
 import axios from 'axios';
 import styled from "styled-components";
 

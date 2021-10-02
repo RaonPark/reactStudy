@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import Login from './container/Login';
@@ -6,10 +5,10 @@ import Register from './container/Register';
 import EmailAuth from "./container/EmailAuth";
 import Home from "./container/Home";
 import React, {useEffect, useState} from "react";
-import PrivateRoute from "./helper/PrivateRoute";
 import LoginService from "./helper/LoginService";
 import Board from './container/Board';
 import Article from "./container/Article";
+import MajorBoard from "./container/MajorBoard";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -34,6 +33,7 @@ function App() {
                         <Route path="/ssuzalal/emailAuth" component={EmailAuth}/>
                         <Route path="/ssuzalal/board" component={Board}/>
                         <Route path="/ssuzalal/article" component={Article}/>
+                        <Route path="/ssuzalal/majorBoard" component={MajorBoard}/>
                         <Route component={Login}/>
                     </Switch>
                 </div>

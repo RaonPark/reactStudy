@@ -1,7 +1,6 @@
 import React from 'react';
 import {Wrapper, Input, Button, Form, ButtonWrapper} from "../helper/StyleUtil";
-import {Link, useHistory} from "react-router-dom";
-import Register from "./Register";
+import {Link} from "react-router-dom";
 import LoginButton from "../button/LoginButton";
 
 const InputWithLabel = ({label, ...inputInfo}) => (

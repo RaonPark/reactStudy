@@ -3,7 +3,7 @@ import {HomeWrapper} from "../helper/StyleUtil";
 import LoginService from "../helper/LoginService";
 import AnnouncementList from "../helper/AnnouncementList";
 import Button from '@mui/material/Button';
-import Board from "./Board";
+import {ButtonGroup} from "@mui/material";
 import {Link} from "react-router-dom";
 
 const BACHELOR = "/ssuzalal/bachelor.do";
@@ -38,11 +38,13 @@ const Home = () => {
 
     return(
         <HomeWrapper>
-            <h2>로그인 완료.</h2>
-            <h1>환영합니다. {id}</h1>
+            <h2>환영합니다. {id}</h2>
             <h4>시간 : {time}</h4>
             <h5>이름 : {username} 학부 : {major}</h5>
-            <Button component={Link} to="/ssuzalal/board">게시판으로</Button>
+            <ButtonGroup variant="text">
+                <Button component={Link} to="/ssuzalal/board">게시판으로</Button>
+                <Button component={Link} to="/ssuzalal/majorBoard" major={major}>학부 공지보기</Button>
+            </ButtonGroup>
             <AnnouncementList url={BACHELOR}/>
             <AnnouncementList url={SCHOLARSHIP}/>
             <AnnouncementList url={EXCHANGE}/>

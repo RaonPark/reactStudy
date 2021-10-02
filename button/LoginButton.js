@@ -1,5 +1,5 @@
-import React, {useCallback} from 'react';
-import {useHistory, withRouter} from 'react-router-dom';
+import React from 'react';
+import {withRouter} from 'react-router-dom';
 import {Button} from "../helper/StyleUtil";
 import axios from "axios";
 import throttle from 'lodash.throttle';
@@ -17,8 +17,6 @@ const LoginButton = ({history, id, password}) => {
             }
         ).then(response => {
             alert("welcome on board! " + id);
-            alert(response.data.msg);
-            alert(response.data.isAuthenticated);
 
             if(!response.data.isAuthenticated) {
                 history.push("/ssuzalal/emailAuth");
